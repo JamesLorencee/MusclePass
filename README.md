@@ -43,7 +43,9 @@ Run the app:
 ## 🛠 How It Works
 
 1️⃣ Enter a password in the text field.
+
 2️⃣ Click "Analyze Password" to check strength and breach status.
+
 3️⃣ See the results:
 
     Strength score (out of 10)
@@ -51,10 +53,13 @@ Run the app:
     Breach check status (safe or compromised)
 
 ## 📌 Example Outputs
-Password	Score	Feedback	Breach Check
-123456	0/10	"Common password. Choose a stronger one."	⚠️ Found in breaches!
-Secure123	5/10	"Use a mix of uppercase, lowercase, numbers, and symbols."	✅ Not found
-P@ssw0rd2024!	10/10	None (Perfect password)	✅ Not found
+**Password**	123456	Secure123	P@ssw0rd2024!	
+
+**Score**	    0/10    5/10        10/10
+
+**Feedback**	"Common password. Choose a stronger one." "Use a mix of uppercase, lowercase, numbers, and symbols." None (Perfect password)                                           
+
+**Breach Check** ⚠️ Found in breaches! ✅ Not found ✅ Not found  	
 
 ## 🛡️ Security & Privacy
 🔒 Your password is **NEVER** sent over the internet.
