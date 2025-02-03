@@ -12,32 +12,38 @@ def check_password_strength(password):
     score = 0
     feedback = []
 
-    # Length check
+    # Length check (Max: 4 points)
     if len(password) >= 12:
-        score += 2
+        score += 4
     elif len(password) >= 8:
-        score += 1
+        score += 2
     else:
         feedback.append("⚠️ Password is too short. Use at least 12 characters.")
 
-    # Complexity check
+    # Complexity check (Max: 4 points)
     has_upper = any(c.isupper() for c in password)
     has_lower = any(c.islower() for c in password)
     has_digit = any(c.isdigit() for c in password)
     has_special = any(c in string.punctuation for c in password)
 
-    if sum([has_upper, has_lower, has_digit, has_special]) >= 3:
+    complexity_score = sum([has_upper, has_lower, has_digit, has_special])
+    if complexity_score == 4:
+        score += 4
+    elif complexity_score == 3:
         score += 2
-    elif sum([has_upper, has_lower, has_digit, has_special]) >= 2:
+    elif complexity_score == 2:
         score += 1
     else:
         feedback.append("⚠️ Use a mix of uppercase, lowercase, numbers, and symbols.")
 
-    # Common password check
+    # Common password check (-4 penalty if common)
     common_passwords = {"password", "123456", "qwerty", "letmein", "welcome"}
     if password.lower() in common_passwords:
         feedback.append("⚠️ This is a commonly used password. Choose a stronger one.")
-        score = 0
+        score -= 4
+
+    # Ensure the score is between 0 and 10
+    score = max(0, min(score, 10))
 
     return score, feedback
 
@@ -71,7 +77,7 @@ def analyze_password():
 
     # Strength check
     score, feedback = check_password_strength(password)
-    strength_label.config(text=f"Strength Score: {score}/4", fg="green" if score >= 3 else "red")
+    strength_label.config(text=f"Strength Score: {score}/10", fg="green" if score >= 7 else "red")
 
     # Display feedback
     feedback_text.config(state=tk.NORMAL)
@@ -97,7 +103,7 @@ header_label.pack(pady=10)
 # Password Input (Plaintext)
 password_label = tk.Label(root, text="Enter a password:")
 password_label.pack()
-password_entry = tk.Entry(root, width=40)  # No 'show' attribute, so it's plaintext
+password_entry = tk.Entry(root, width=40)  # Now in plaintext mode
 password_entry.pack()
 
 # Analyze Button
